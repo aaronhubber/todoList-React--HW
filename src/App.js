@@ -4,33 +4,47 @@ import './App.css';
 function App() {
  
     const [items, setItems] = useState([
-      {description: "Walk Dog", priority:"high"},
-      {description: "Clean Dishes", priority:"high"},
-      {description: "Wash Windows", priority:"low"}
+      {description: "Walk Dog", haspriority:true},
+      {description: "Clean Dishes", haspriority:true},
+      {description: "Wash Windows", haspriority:false}
     ])
  
-    const [newItem, setNewItem] = useState("")
+    const [newItem, setNewItem,] = useState("")
+    const [newPriority, setNewPriority] = useState("")
 
-
+    const addPriority = ((index) =>{
+      const copyItems = [... items]
+      copyItems[index].haspriority = !copyItems[index].haspriority
+      setItems(copyItems)
+    })
   
-    const itemNodes = items.map((item) => { 
+    const itemNodes = items.map((item, index) => { 
       return(
-          <li><span>{item.description}</span></li> 
+          <li key={index} className={item.haspriority ? "high-priority" : "low-priority"}>
+            
+          <span>{item.description}</span>
+          {item.haspriority ? <button class="green" onClick={() => 
+          addPriority(index)}> High Priority </button> : <button class ="red" onClick={() => 
+          addPriority(index)}>Low Priority</button>}</li> 
       )
   })
-
-  
   
     const handleItemInput = (event) =>{
       setNewItem(event.target.value)
+    }
+
+    const handleRadioInput = (event) =>{
+      console.log(event)
+      setNewPriority(event.target.value)
     }
   
     const saveNewItem=((event) => {
       event.preventDefault()
       const copyItem = [... items]
-      copyItem.push({description: newItem})
+      copyItem.push({description: newItem, haspriority: newPriority})
       setItems(copyItem)
       setNewItem("")
+      
     })
 
   return (
@@ -44,17 +58,16 @@ function App() {
 
     <label htmlFor="new-item">Add a new item:</label>  
       <input id="new-item" type="text" onChange={handleItemInput} value={newItem}/>                
-      High Priority
-    <input type="radio" name="high-priority"></input>
+    <label for="high-priority">High Priority:</label>
+    <input type="radio" onClick={handleRadioInput} value ="true" name="priority"></input>
     Low priority
-    <input type="radio" name="low-priority"></input>
+    <input type="radio"  onClick={handleRadioInput} value=""  name="priority"></input>
     <input type="submit" value="Save New Item" /> 
     </form>
 
     <ul>
     {itemNodes}
     </ul>
-
 
 </div>
   );

@@ -19,7 +19,22 @@ li span {
   padding: 8px;
 }
 li button {
-  background: #f2360c;
+  background: #460cf2;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+li button.red {
+  background: #eca336;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+li button.green{
+  background: #3a9e2b;
   color: #fff;
   border: none;
   padding: 10px;
